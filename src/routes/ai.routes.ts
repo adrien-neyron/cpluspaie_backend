@@ -5,7 +5,12 @@ import { openai } from '../services/openai.service.js'; // wrapper pour OpenAI
 const router = Router();
 
 router.post('/analyse', async (req, res) => {
-  const { ccn, effectif, secteur, typeContrats, objectifs, problemes, priorite } = req.body;
+  const b = req.body ?? {};
+  const txt = (v: unknown) => String(v ?? '').slice(0, 500);
+  const list = (v: unknown) => (Array.isArray(v) ? v.slice(0, 20).map(txt) : []);
+  const ccn = txt(b.ccn), effectif = txt(b.effectif), secteur = txt(b.secteur);
+  const typeContrats = list(b.typeContrats), objectifs = list(b.objectifs);
+  const problemes = txt(b.problemes), priorite = txt(b.priorite);
 
   try {
     const prompt = `

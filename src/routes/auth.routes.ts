@@ -1,17 +1,12 @@
-import { Router, Response } from "express";
-import { checkJwt } from "../config/auth0.js";
-import { syncOrCreateUser } from "../middleware/auth.middleware.js";
-import { AuthRequest } from "../types/auth.types.js";
+import { RequestHandler, Router } from 'express';
+import { AuthRequest } from '../types/auth.types.js';
 
-const router = Router();
-
-router.get(
-  "/me",
-  checkJwt,
-  syncOrCreateUser,
-  (req: AuthRequest, res: Response) => {
-    res.status(200).json(req.user);
-  }
-);
-
-export default router;
+/** GET /auth/me : profil applicatif (id, email, rôle). Refuse (403) les comptes non invités. */
+export function buildAuthRouter(auth: RequestHandler[]) {
+  const router = Router();
+  router.get('/me', ...auth, (req: AuthRequest, res) => {
+    const { id, email, name, role } = req.user!;
+    res.status(200).json({ id, email, name, role });
+  });
+  return router;
+}

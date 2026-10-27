@@ -1,23 +1,3 @@
-import { Request, Response } from 'express';
-import { dbService } from '../services/database.service.js';
-
-export const getAllUsers = async (req: Request, res: Response) => {
-  const { page = '1', limit = '20', role, search } = req.query;
-
-  const result = await dbService.getAllUsers(
-    Number(page),
-    Number(limit),
-    role as any,
-    search as string
-  );
-
-  res.json({
-    success: true,
-    data: result.users,
-    pagination: {
-      page: Number(page),
-      limit: Number(limit),
-      total: result.total,
-    },
-  });
-};
+// Fichier obsolète, remplacé par la nouvelle architecture (voir PORTAIL_CLIENT.md).
+// Vous pouvez le supprimer : il est volontairement vide pour ne pas casser la compilation.
+export {};
