@@ -26,7 +26,7 @@ export function createApp(opts: AppOptions) {
   app.use(helmet());
 
   const corsOptions = {
-    origin: opts.allowedOrigins ?? ['http://localhost:3000', 'https://cpluspaie-frontend.vercel.app'],
+    origin: opts.allowedOrigins ?? ['http://localhost:3000', 'https://cpluspaie.vercel.app', 'https://cpaie.vercel.app'],
     credentials: true,
   };
   app.use(cors(corsOptions));
